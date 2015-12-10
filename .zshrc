@@ -1,16 +1,10 @@
-#-------------------------------------------------------------------------#
-#                                                                         #
-# You can make command "shortcuts" using the alias command.               # 
-#                                                                         #
-#-------------------------------------------------------------------------#
+# Aliases
 
-alias rl="rlogin"
+#alias f='finger'
+#alias rl="rlogin"
 #alias t="telnet"
 alias ns="nslookup"
 alias p="ping"
-
-######################################################################
-# disco aliases
 
 alias alpha='cat ~/phonetics.txt'
 alias cn='cat > /dev/null'
@@ -18,7 +12,6 @@ alias dig='dig +search'
 alias dir='ls -al'
 alias dm='docker-machine'
 alias edm='eval $(docker-machine env dev)'
-alias f='finger'
 alias g='grep -i'
 alias gl='git log --pretty=fuller'
 alias h='fc -dl -20'
@@ -41,28 +34,10 @@ alias t='traceroute'
 alias where='whence -a'
 alias whois='whois -h geektools.com'
 
-######################################################################
-
-#-------------------------------------------------------------------------#
-# If you would rather use a newer, better version of vi uncomment the     #
-# following line                                                          #
-#-------------------------------------------------------------------------#
-
-#alias vi="nvi"
-
-#-------------------------------------------------------------------------#
-# Some people find Sun's version of "ping" to be broken and would rather  #
-# use "nping".  If you would rather use nping, uncomment the line below   #
-#-------------------------------------------------------------------------#
-
+# If you would rather use nping, uncomment the line below
 #alias ping 'nping'
 
-#-------------------------------------------------------------------------#
-# Some people keep their aliases in a seperate file called .zaliases (or  #
-# some such name).  If you prefer to keep them there, uncomment the line  #
-# below and move your aliases to your new aliases file                    #
-#-------------------------------------------------------------------------#
-
+# Load aliases from the .zaliases file, if it exists
 #[ -f $HOME/.zaliases ] && source $HOME/.zaliases
 
 #-------------------------------------------------------------------------#
@@ -84,17 +59,10 @@ function _ssh_auth_save() {
 	  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
 }
 
-######################################################################
-# disco functions
-
 function ma {tbl $* | nroff -man - | col | less -s}
 function me {tbl $* | nroff -me - | col | less -s}
 
-######################################################################
-
-######################################################################
-# disco prompt
-
+# Shell prompt config
 # Set colors
 fg_red=$'[1;31m'
 fg_dkred=$'[0;31m'
@@ -115,14 +83,15 @@ if [ "$TERM" = "xterm" -o "rxvt" ]; then
   elif [ "x$SSH_CLIENT" != "x" ]; then
     PROMPT="%{${fg_dkcyan}%}%n%{${fg_yellow}%}@%{${fg_dkmagenta}%}%${HN}m%{${fg_white}%}:%{${fg_cyan}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
   else
-    PROMPT="%{${fg_yellow}%}%n%{${fg_white}%}@%{${fg_blue}%}%${HN}m%{${fg_white}%}:%{${fg_magenta}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
-    RPROMPT="%B[%*]%b"
+    # uncomment these two lines for timestamp on the right
+    #PROMPT="%{${fg_yellow}%}%n%{${fg_white}%}@%{${fg_blue}%}%${HN}m%{${fg_white}%}:%{${fg_magenta}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
+    #RPROMPT="%B[%*]%b"
+    # uncomment this line for timestamp on the left
+    PROMPT="%B[%*]%b %{${fg_yellow}%}%n%{${fg_white}%}@%{${fg_blue}%}%${HN}m%{${fg_white}%}:%{${fg_magenta}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
   fi
 else
   PROMPT="%m:%2c%(#.#.>) "
 fi
-
-######################################################################
 
 #-------------------------------------------------------------------------#
 # Options can be set to alter the behavior of an interactive shell.  Some #
@@ -132,9 +101,6 @@ fi
 setopt CORRECT
 setopt NOBEEP
 setopt NOHUP
-
-######################################################################
-# disco options
 
 setopt AUTO_CD
 setopt LIST_TYPES
@@ -147,12 +113,11 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_NO_STORE
 
-######################################################################
-
 # Bind the up and down arrow keys for correct operation
 bindkey '[A' up-line-or-history
 bindkey '[B' down-line-or-history
-# Set language to the standard UNIX context so that sorting is all screwed up
+
+# Set language to the standard UNIX context so that sorting isn't all screwed up
 # Pulled from .zshenv since the /etc/profile.d/lang.sh steps all over it
 if [ "$LANG" != "C" ]; then
   export LANG=C

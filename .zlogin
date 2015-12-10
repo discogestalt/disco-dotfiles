@@ -1,17 +1,8 @@
 ####################################################################
-# Set "$_OS" to the current operating system ("SunOS 5.5.1", etc.) #
+# Set "$_OS" to the current operating system ("Darwin 14.5.0", etc.) #
 ####################################################################
 
 export _OS="`uname -sr`"
-
-######################################################################
-# If we're on a SunOS box, and we have a ".zlogin.sunos4", source it #
-######################################################################
-
-if [ "${_OS#SunOS 4}" != "$_OS" -a -f $HOME/.zlogin.sunos4 ]; then
-  source $HOME/.zlogin.sunos4
-  exit
-fi
 
 ################################################
 # Make sure that our terminal type isn't hosed #
