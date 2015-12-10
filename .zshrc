@@ -1,3 +1,4 @@
+#@IgnoreInspection BashAddShebang
 # Aliases
 
 #alias f='finger'
@@ -59,8 +60,12 @@ function _ssh_auth_save() {
 	  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
 }
 
-function ma {tbl $* | nroff -man - | col | less -s}
-function me {tbl $* | nroff -me - | col | less -s}
+function ma {
+  tbl $* | nroff -man - | col | less -s
+}
+function me {
+  tbl $* | nroff -me - | col | less -s
+}
 
 # Shell prompt config
 # Set colors
