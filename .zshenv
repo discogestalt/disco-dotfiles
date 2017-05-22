@@ -1,4 +1,3 @@
-#@IgnoreInspection BashAddShebang
 # System-wide defaults
 #
 #    SBIN - Have "administrative" commands added to your path

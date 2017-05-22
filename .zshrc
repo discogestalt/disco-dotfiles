@@ -1,4 +1,3 @@
-#@IgnoreInspection BashAddShebang
 # Aliases
 
 #alias f='finger'
@@ -32,8 +31,10 @@ alias s='screen -S'
 alias sdr='screen -Dr'
 alias sr='screen -r'
 alias t='traceroute'
+alias tm='_ssh_auth_save; SSH_AUTH_SOCK=~/.ssh/ssh-auth-sock-screen tmux -CC'
+alias tma='tmux -CC attach'
 alias where='whence -a'
-alias whois='whois -h geektools.com'
+#alias whois='whois -h geektools.com'
 
 # If you would rather use nping, uncomment the line below
 #alias ping 'nping'
@@ -60,13 +61,6 @@ function _ssh_auth_save() {
 	  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
 }
 
-function ma {
-  tbl $* | nroff -man - | col | less -s
-}
-function me {
-  tbl $* | nroff -me - | col | less -s
-}
-
 # Shell prompt config
 # Set colors
 fg_red=$'[1;31m'
@@ -84,9 +78,9 @@ fg_reset=$'[0;39m'
 if [ "$TERM" = "xterm" -o "rxvt" ]; then
   HN=`hostname | awk -F. '{print (NF-2)}'`
   if [ "$HOME" = "/root" ] || [ "$USER" = "root" ]; then
-    PROMPT="%B[%*]%b %{${fg_red}%}%n%{${fg_yellow}%}@%{${fg_dkred}%}%${HN}m%{${fg_white}%}:%{${fg_cyan}%}%2~%{${fg_red}%}%(#.#.>)%{${fg_reset}%} "
+    PROMPT="%{${fg_red}%}%n%{${fg_yellow}%}@%{${fg_dkred}%}%${HN}m%{${fg_white}%}:%{${fg_cyan}%}%2~%{${fg_red}%}%(#.#.>)%{${fg_reset}%} "
   elif [ "x$SSH_CLIENT" != "x" ]; then
-    PROMPT="%B[%*]%b %{${fg_dkcyan}%}%n%{${fg_yellow}%}@%{${fg_dkmagenta}%}%${HN}m%{${fg_white}%}:%{${fg_cyan}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
+    PROMPT="%{${fg_dkcyan}%}%n%{${fg_yellow}%}@%{${fg_dkmagenta}%}%${HN}m%{${fg_white}%}:%{${fg_cyan}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
   else
     # uncomment these two lines for timestamp on the right
     #PROMPT="%{${fg_yellow}%}%n%{${fg_white}%}@%{${fg_blue}%}%${HN}m%{${fg_white}%}:%{${fg_magenta}%}%2~%{${fg_white}%}%(#.#.>)%{${fg_reset}%} "
@@ -124,7 +118,8 @@ bindkey '[B' down-line-or-history
 
 # Set language to the standard UNIX context so that sorting isn't all screwed up
 # Pulled from .zshenv since the /etc/profile.d/lang.sh steps all over it
-if [ "$LANG" != "C" ]; then
-  export LANG=C
+if [ "$LANG" != "C.UTF-8" ]; then
+  export LANG=C.UTF-8
 fi
 
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
