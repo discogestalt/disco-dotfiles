@@ -19,6 +19,7 @@ fi
 
 #export ENSCRIPT='--fancy-header=mp'
 export CLICOLOR='true'
+export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # prefer vim if it's installed
 if [ -x /usr/bin/vim ]; then
