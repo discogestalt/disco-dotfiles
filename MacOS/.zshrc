@@ -51,6 +51,10 @@ function cdp() {
     pwd
 }
 
+function f() {
+    fc -l -m "$1*" 0
+}
+
 function _ssh_auth_save() {
 	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
 }
@@ -99,6 +103,7 @@ setopt AUTO_CD
 setopt LIST_TYPES
 
 # History options
+HISTFILE="${HOME}/.zsh.history"
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -112,8 +117,8 @@ bindkey '[B' down-line-or-history
 
 # Set language to the standard UNIX context so that sorting isn't all screwed up
 # Pulled from .zshenv since the /etc/profile.d/lang.sh steps all over it
-if [ "$LANG" != "C.UTF-8" ]; then
-  export LANG=C.UTF-8
+if [ "$LANG" != "en_US.UTF-8" ]; then
+  export LANG=en_US.UTF-8
 fi
 if [ "$LC_COLLATE" != "C" ]; then
   export LC_COLLATE=C
