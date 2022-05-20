@@ -17,14 +17,8 @@ alias gl='git log --pretty=fuller'
 alias h='fc -dl -20'
 alias j='jobs'
 alias ls='ls -F'
-# if Linux we want this to be slightly different...
-if [ "$_OS" = "Linux" ]; then
-    alias l='ls -an'
-    alias ll='ls -an | less'
-else
-    alias l='ls -al'
-    alias ll='ls -al | less'
-fi
+alias l='ls -al'
+alias ll='ls -al | less'
 alias m='less'
 alias screen='_ssh_auth_save; screen'
 alias s='screen -S'
@@ -58,7 +52,7 @@ function cdp() {
 }
 
 function _ssh_auth_save() {
-	  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
+	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
 }
 
 # Shell prompt config
@@ -121,9 +115,15 @@ bindkey '[B' down-line-or-history
 if [ "$LANG" != "C.UTF-8" ]; then
   export LANG=C.UTF-8
 fi
+if [ "$LC_COLLATE" != "C" ]; then
+  export LC_COLLATE=C
+fi
 
 # Enable iTerm shell integration if installed
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Virtualenv Wrapper tools
 test -e /usr/local/bin/virtualenvwrapper.sh && source /usr/local/bin/virtualenvwrapper.sh
+
+# Get the bash completions too
+autoload -U +X bashcompinit && bashcompinit
