@@ -7,8 +7,8 @@ set ruler
 set noshowmode
 set textwidth=0
 set nobackup
-set shiftwidth=2
-set ts=2
+set shiftwidth=4
+set ts=4
 high Normal guifg=White guibg=Black
 high Search guifg=Black
 syntax on
@@ -21,9 +21,9 @@ set fo=tcq
 set nocompatible
 set modeline
 
-set tabstop=2
+set tabstop=4
 set expandtab
-set softtabstop=2
+set softtabstop=4
 
 highlight LiteralTabs ctermbg=darkgreen guibg=darkgreen
 match LiteralTabs /\s\	/
