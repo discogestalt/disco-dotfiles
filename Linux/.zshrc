@@ -1,8 +1,5 @@
 # Aliases
 
-#alias f='finger'
-#alias rl="rlogin"
-#alias t="telnet"
 alias ns="nslookup"
 alias p="ping"
 
@@ -28,7 +25,6 @@ alias t='traceroute'
 alias tm='_ssh_auth_save; SSH_AUTH_SOCK=~/.ssh/ssh-auth-sock-screen tmux -CC'
 alias tma='tmux -CC attach'
 alias where='whence -a'
-#alias whois='whois -h geektools.com'
 
 # If you would rather use nping, uncomment the line below
 #alias ping 'nping'
@@ -51,81 +47,12 @@ function cdp() {
     pwd
 }
 
+function f() {
+    fc -l -m "$1*" 0
+}
+
 function _ssh_auth_save() {
 	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-auth-sock-screen
-}
-
-# Functions for using the NetScaler Nitro API
-function nshanode() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.hanode+json" "https://$1/nitro/v1/config/hanode" | jq '.'
-}
-
-function nscertkeys() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.sslcertkey+json" "https://$1/nitro/v1/config/sslcertkey/" | jq '.' | grep '"certkey"'
-}
-
-function nscert() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.sslcertkey+json" "https://$1/nitro/v1/config/sslcertkey/$2" | jq '.'
-}
-
-function nscertfiles() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.systemfile+json" "https://$1/nitro/v1/config/systemfile?args=filelocation:%2Fnsconfig%2Fssl" | jq '.' | grep $2
-}
-
-function nscertupdate() {
-  curl -k -v -H "Content-Type: application/vnd.com.citrix.netscaler.sslcertkey+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/sslcertkey?action=update" -X POST -d "{\"sslcertkey\": {\"certkey\": \"$2\", \"cert\": \"$3.cert\", \"key\": \"$3.key\", \"passplain\": \"$4\", \"noDomainCheck\": \"true\"}}"
-}
-
-function nscertbinding() {
-  curl -sSk -H "Content-Type: application/vnd.com.citrix.netscaler.sslcertkey_binding+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/sslcertkey_binding/$2" | jq '.'
-}
-
-function nscertdelete() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.sslcertkey+json" -X DELETE "https://$1/nitro/v1/config/sslcertkey/$2" | jq '.'
-}
-
-function nslbvserver() {
-  curl -sSk -H "Content-Type: application/vnd.com.citrix.netscaler.lbvserver+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/lbvserver/$2" | jq '.'
-}
-
-function nscsvserver() {
-  curl -sSk -H "Content-Type: application/vnd.com.citrix.netscaler.csvserver+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/csvserver/$2" | jq '.'
-}
-
-function nssslvserver() {
-  curl -sSk -H "Content-Type: application/vnd.com.citrix.netscaler.sslvserver_binding+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/sslvserver_binding/$2" | jq '.'
-}
-
-function nssslvserver_bindcert() {
-  curl -v -k -H "Content-Type: application/vnd.com.citrix.netscaler.sslvserver_sslcertkey_binding+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/sslvserver_sslcertkey_binding" -X PUT -d "{\"sslvserver_sslcertkey_binding\": {\"vservername\": \"$2\", \"certkeyname\": \"$3\"}}" | jq '.'
-}
-
-function nsservicegroups() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.servicegroup+json" "https://$1/nitro/v1/config/servicegroup" | jq '.'
-}
-
-function nssg() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.servicegroup+json" "https://$1/nitro/v1/config/servicegroup/$2" | jq '.'
-}
-
-function nssgxfwd() {
-  curl -k -v -H "Content-Type: application/vnd.com.citrix.netscaler.servicegroup+json" -u isgdo-rw:${NSPASS} "https://$1/nitro/v1/config/servicegroup" -X PUT -d "{\"servicegroup\": {\"servicegroupname\": \"$2\", \"cip\": \"ENABLED\", \"cipheader\": \"X-forwarded-for\"}}"
-}
-
-function nssaveconf() {
-  curl -k -v -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.nsconfig+json" "https://$1/nitro/v1/config/nsconfig?action=save" -X POST -d "{\"nsconfig\": {}}"
-}
-
-function nssc() {
-  echo $(curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.nssavedconfig+json" "https://$1/nitro/v1/config/nssavedconfig") | awk -F '\n' '{print}'
-}
-
-function nsget() {
-  curl -sSk -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.$2+json" "https://$1/nitro/v1/config/$2" | jq '.'
-}
-
-function nsput() {
-  curl -k -v -u isgdo-rw:${NSPASS} -H "Content-Type: application/vnd.com.citrix.netscaler.$2+json" "https://$1/nitro/v1/config/$2" -X PUT -d "$3"
 }
 
 # Shell prompt config
@@ -172,6 +99,7 @@ setopt AUTO_CD
 setopt LIST_TYPES
 
 # History options
+HISTFILE="${HOME}/.zsh.history"
 setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST

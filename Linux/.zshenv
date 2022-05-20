@@ -8,16 +8,8 @@ if [[ -z "$ZLOGIN" ]]; then
   source ~/.zlogin
 fi
 
-if [ -d /usr/local/etd/bin ]; then
-  export PATH="/usr/local/etd/bin:${PATH}"
-fi
-
 export SBIN=1
 export SBIN_PATH="/usr/local/sbin:/usr/sbin:/sbin"
-
-if [ -d /usr/local/etd/sbin ]; then
-  export SBIN_PATH="/usr/local/etd/sbin:${SBIN_PATH}"
-fi
 
 if [ $SBIN ]; then
   export PATH="${SBIN_PATH}:${PATH}"
