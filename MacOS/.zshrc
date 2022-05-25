@@ -128,7 +128,7 @@ fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Virtualenv Wrapper tools
-test -e /usr/local/bin/virtualenvwrapper.sh && source /usr/local/bin/virtualenvwrapper.sh
+test -e /opt/homebrew/bin/virtualenvwrapper.sh && source /opt/homebrew/bin/virtualenvwrapper.sh
 
 # Get the bash completions too
 autoload -U +X bashcompinit && bashcompinit
